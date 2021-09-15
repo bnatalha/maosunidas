@@ -29,7 +29,11 @@ class _MaosUnidasAppState extends State<MaosUnidasApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      initialRoute: '/home',
+      routes: {
+        '/home': (_) => HomeScreen(),
+      },
+      // home: HomeScreen(),
     );
   }
 }

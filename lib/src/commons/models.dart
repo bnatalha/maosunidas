@@ -42,6 +42,8 @@ class Acao {
   final AcaoStatus status;
   final List<String> causas;
 
+  bool userIsRegistered = false;
+
   Acao(
     this.title,
     this.registeredBy,
@@ -53,9 +55,10 @@ class Acao {
     this.end,
     this.status,
     this.causas,
+    this.userIsRegistered,
   );
 
-  copyWith([
+  Acao copyWith([
     String title,
     Voluntario registeredBy,
     String description,
@@ -66,6 +69,7 @@ class Acao {
     DateTime end,
     AcaoStatus status,
     List<String> causas,
+    bool userIsRegistered,
   ]) {
     return Acao(
       title ?? this.title,
@@ -78,6 +82,7 @@ class Acao {
       end ?? this.end,
       status ?? this.status,
       causas ?? this.causas,
+      userIsRegistered ?? this.userIsRegistered,
     );
   }
 }
@@ -86,6 +91,8 @@ class Causas {
   static const String eduInfantil = 'Educação Infantil';
   static const String eduDigital = 'Educação Digital';
   static const String eduIdosos = 'Educação de Idosos';
+
+  static const List<String> all = [eduInfantil, eduDigital, eduIdosos];
 }
 
 class Ong {

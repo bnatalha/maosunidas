@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:maosunidas/src/cenarios/cen6/cen6.controller.dart';
+import 'package:maosunidas/src/cenarios/cen6/notif.controller.dart';
 import 'package:maosunidas/src/commons/screens/acao/acao.screen.dart';
 import 'package:maosunidas/src/utils/notifications.dart';
 import 'package:maosunidas/src/utils/ui/appbar.widget.dart';
@@ -80,14 +80,14 @@ class _InteressesScreenState extends State<InteressesScreen> {
                     bcontext,
                     title: notifTitle,
                     subtitle: notifDesc,
-                    value: GetIt.I.get<Cen6Controller>().isNotifOn,
+                    value: GetIt.I.get<NotifController>().isNotifOn,
                     onChanged: (bool _) {
                   if (_) {
                     Future.delayed(Duration(seconds: 2)).then((_) =>
                         showNotification(
                             body: notifBody, payload: NotifPayloads.openAcao));
                   }
-                  GetIt.I.get<Cen6Controller>().isNotifOn = _;
+                  GetIt.I.get<NotifController>().isNotifOn = _;
                 }),
               ),
             ),

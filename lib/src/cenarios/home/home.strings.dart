@@ -11,7 +11,8 @@ class HomeStrings {
   static const String CEN_4_DESC =
       'Italo quer informações sobre os participantes envolvidos nas ações que organizou';
 
-  static const String CEN_5_TITLE = "Cenário 5 - Visão da Ong";
+  static const String CEN_5A_TITLE = "Cenário 5 - Visão da Ong";
+  static const String CEN_5B_TITLE = "Cenário 5 - Visão do Voluntário";
   static const String CEN_5_DESC =
       'Italo e Bessa querem poder notificar aos voluntários quando houver uma mudança em uma determinada ação';
 

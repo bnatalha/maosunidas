@@ -16,7 +16,12 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.blue.shade700,
-      leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+      leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
+            Navigator.of(context)
+                .popUntil((route) => route.settings.name == '/home');
+          }),
       centerTitle: true,
       titleTextStyle: TextStyle(color: Colors.white, fontSize: 16),
       title: Text(

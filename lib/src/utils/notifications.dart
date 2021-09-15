@@ -41,6 +41,8 @@ Future<void> showNotification(
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
       AndroidNotificationDetails(
           'your channel id', 'your channel name', 'your channel description',
+          onlyAlertOnce: false,
+          visibility: NotificationVisibility.public,
           importance: Importance.max,
           priority: Priority.high,
           ticker: 'ticker');

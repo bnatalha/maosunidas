@@ -6,7 +6,6 @@ import 'package:maosunidas/src/commons/models.dart';
 import 'package:maosunidas/src/commons/screens/acao/acao.controller.dart';
 import 'package:maosunidas/src/commons/screens/acao_edit/acao_edit.screen.dart';
 import 'package:maosunidas/src/commons/screens/participantes/participantes.screen.dart';
-import 'package:maosunidas/src/utils/ipsums.dart';
 import 'package:maosunidas/src/utils/ui/appbar.widget.dart';
 import 'package:maosunidas/src/utils/ui/widgets.dart';
 import 'package:intl/intl.dart';
@@ -75,7 +74,11 @@ class _AcaoScreenState extends State<AcaoScreen> {
                   children: [
                     participantsButton(),
                     Spacer(),
-                    if (!controller.isUserFromTheOng) joinButton(),
+                    if (!controller.isUserFromTheOng &&
+                        (controller.acao.maxParticipants >
+                                controller.acao.participantes.length ||
+                            controller.acao.userIsRegistered))
+                      joinButton(),
                   ],
                 ),
               ),
@@ -151,21 +154,93 @@ class _AcaoScreenState extends State<AcaoScreen> {
   }
 
   Widget joinButton() {
-    return ElevatedButton(
-        onPressed: () {},
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        ),
-        child: Column(children: [
-          Icon(
-            Icons.person_add,
-            size: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Text("participar"),
-          ),
-        ]));
+    return controller.acao.userIsRegistered
+        ? ElevatedButton(
+            onPressed: () async {
+              bool makeChange = await showDialog<bool>(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text('Deixar de participar? ):'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                      child: Text('CANCELAR'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: Text('OK'),
+                    )
+                  ],
+                ),
+              );
+              if (makeChange) {
+                setState(() {
+                  controller.acao.userIsRegistered = false;
+                  controller.acao.participantes.removeLast();
+                });
+              }
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            ),
+            child: Column(children: [
+              Icon(
+                Icons.person_remove,
+                size: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text("parar de participar"),
+              ),
+            ]))
+        : ElevatedButton(
+            onPressed: () async {
+              // bool makeChange = await showDialog<bool>(
+              //   context: context,
+              //   builder: (_) => AlertDialog(
+              //     title: Text('Você tem certeza que quer participar?'),
+              //     actions: [
+              //       TextButton(
+              //         onPressed: () {
+              //           Navigator.of(context).pop(false);
+              //         },
+              //         child: Text('CANCELAR'),
+              //       ),
+              //       TextButton(
+              //         onPressed: () {
+              //           Navigator.of(context).pop(true);
+              //         },
+              //         child: Text('OK'),
+              //       )
+              //     ],
+              //   ),
+              // );
+              // if (makeChange) {
+              setState(() {
+                controller.acao.userIsRegistered = true;
+                controller.acao.participantes
+                    .add(Voluntario('', '', '', '', ''));
+              });
+              // }
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            ),
+            child: Column(children: [
+              Icon(
+                Icons.person_add,
+                size: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text("participar"),
+              ),
+            ]));
   }
 }
